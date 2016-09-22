@@ -110,8 +110,9 @@ return [
 
     'attributes' => [
         'backend' => [
-          'email' => '邮箱',
-          'password' => '密码',
+            'email' => '邮箱',
+            'password' => '密码',
+            'password_confirmation' => '确认密码',
         ],
     ],
 

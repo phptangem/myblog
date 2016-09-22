@@ -12,5 +12,6 @@ Route::group(['namespace' => 'Auth'], function(){
         //Password reset routes...
         Route::get('password/reset/{token?}', 'PasswordController@showResetForm')->name('backend.password.reset');
         Route::post('password/email', 'PasswordController@sendResetLinkEmail');
+        Route::post('password/reset', 'PasswordController@reset');
     });
 });
