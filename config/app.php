@@ -169,6 +169,8 @@ return [
          * Thirty Party Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+        HieuLe\Active\ActiveServiceProvider::class,
 
     ],
 
@@ -221,6 +223,8 @@ return [
          */
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Active' => HieuLe\Active\Facades\Active::class,
     ],
 
 ];
