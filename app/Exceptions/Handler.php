@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -45,6 +46,19 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        /**
+         * Redirect if token mismatch error
+         * Usually because  user stayed on the same screen too long their session expired
+         */
+        if($e instanceof TokenMismatchException){
+            return redirect(route('backend.auth.login'));
+        }
+        /**
+         * All instance of GeneralException redirect back with a flash message to show a bootstrap alert-error
+         */
+        if($e instanceof GeneralException){
+            return redirect()->back()->withInput()->withFlashDanger($e->getMessage());
+        }
         return parent::render($request, $e);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend\Auth;
 
 use App\Http\Requests\Request;
 
-class ResetRequest extends Request
+class LoginRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class ResetRequest extends Request
     public function rules()
     {
         return [
-            'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required',
         ];
     }
 
@@ -35,7 +34,6 @@ class ResetRequest extends Request
         return [
             'email' => '邮箱',
             'password' => '密码',
-            'token' =>'授权码'
         ];
     }
 

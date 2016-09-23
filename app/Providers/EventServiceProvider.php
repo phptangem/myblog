@@ -16,6 +16,18 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SomeEvent' => [
             'App\Listeners\EventListener',
         ],
+        /**
+         * Authentication Events
+         */
+        \App\Events\Backend\Auth\UserLoggedIn::class => [
+            \App\Listeners\Backend\Auth\UserLoggedInListener::class,
+        ],
+        \App\Events\Backend\Auth\UserLoggedOut::class => [
+            \App\Listeners\Backend\Auth\UserLoggedOutListener::class,
+        ],
+        \App\Events\Backend\Auth\UserRegistered::class => [
+            \App\Listeners\Backend\Auth\UserRegisteredListener::class,
+        ],
     ];
 
     /**

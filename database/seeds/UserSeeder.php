@@ -12,13 +12,12 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->truncate();
-        $username = '328848827@qq.com';
+        $username = 'admin@admin.com';
         $password = '123456';
         $data = [
             'name' => 'admin',
             'email' => $username,
             'password' =>bcrypt($password),
-            'desc'=>'管理员'
         ];
         User::create($data);
         $this->command->info("New Admin created. Username: $username, Password: $password");

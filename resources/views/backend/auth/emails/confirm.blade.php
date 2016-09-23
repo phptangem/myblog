@@ -1,0 +1,1 @@
+{{ trans('strings.emails.confirm_account') . ' ' . url('backend/account/confirm/' . $token) }}
