@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->truncate();
-        $username = 'admin@admin.com';
+        $username = '328848827@qq.com';
         $password = '123456';
         $data = [
             'name' => 'admin',

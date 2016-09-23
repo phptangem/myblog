@@ -17,6 +17,6 @@ return [
     'reset' => 'Your password has been reset!',
     'sent' => '邮件已经发送请前往您的邮箱确认!',
     'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that e-mail address.",
+    'user' => "邮箱不存在!",
 
 ];

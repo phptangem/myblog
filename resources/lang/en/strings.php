@@ -3,9 +3,11 @@
 return [
     'backend' => [
         'general' => [
+            'all_rights_reserved' => 'All Rights Reserved',
             'status' => [
                 'online' => '在线',
-            ]
+            ],
+            'search_placeholder' => '搜索',
         ]
     ],
     'emails' => [

@@ -34,7 +34,7 @@
 </nav>
 
 <div class="container">
-    @include('backend.includes.partials.messages')
+    @include('includes.partials.messages')
     <div class="row">
 
         <div class="col-md-8 col-md-offset-2">
@@ -80,7 +80,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 {{--<script>window.jQuery || document.write('<script src="{{asset('js/vendor/jquery/jquery-2.1.4.min.js')}}"><\/script>')</script>--}}
 {{--{!! Html::script('js/vendor/bootstrap/bootstrap.min.js') !!}--}}
-
 @yield('before-scripts-end')
 {{--{!! Html::script(elixir('js/backend.js')) !!}--}}
 @yield('after-scripts-end')

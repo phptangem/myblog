@@ -93,6 +93,5 @@
 @yield('before-scripts-end')
 {{--{!! Html::script(elixir('js/backend.js')) !!}--}}
 @yield('after-scripts-end')
-
 </body>
 </html>

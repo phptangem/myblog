@@ -9,7 +9,7 @@
                 <img src="{{url('/img/avatar.jpg')}}" alt="User Image" class="img-circle">
             </div>
             <div class="pull-left info">
-                <p>{!! auth()->user()->desc !!}</p>
+                <p>{!! auth()->user()->name !!}</p>
                 {{--Status--}}
                 <a href="#"><i class="fa fa-circle text-success"></i>{{trans('strings.backend.general.status.online')}}</a>
             </div>

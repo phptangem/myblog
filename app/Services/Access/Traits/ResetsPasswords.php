@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Password;
 trait ResetsPasswords
 {
     use RedirectsUsers;
+
     public function showLinkRequestForm()
     {
         return view('backend.auth.passwords.email');
