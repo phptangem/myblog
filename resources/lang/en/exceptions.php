@@ -1,6 +1,14 @@
 <?php
 return [
     'backend' =>[
+        'access'=>[
+            'users' => [
+                'cant_deactivate_self' =>'不能禁用自己',
+                'mark_error' => '更新异常，请重试!',
+                'cant_delete_self' => '不能删除自己',
+                'delete_error' => '删除异常',
+            ],
+        ],
         'auth' => [
             'confirmation' => [
                 'already_confirmed' => '账户已经激活,请勿重复操作',

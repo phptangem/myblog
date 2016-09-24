@@ -31,4 +31,20 @@ interface UserRepositoryContract
      * @return mixed
      */
     public function findByToken($token);
+
+    /**
+     * @param $perPage
+     * @param int $status
+     * @param string $orderBy
+     * @param string $sort
+     * @return mixed
+     */
+    public function getUserPaginated($perPage,$status = 1, $orderBy = 'id', $sort = 'asc');
+
+    /**
+     * @param $id
+     * @param $status
+     * @return mixed
+     */
+    public function mark($id, $status);
 }

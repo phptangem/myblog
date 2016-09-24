@@ -15,5 +15,6 @@ class User extends Authenticatable
 
     protected $guarded = ['id'];
     protected $hidden  = ['password', 'remember_token'];
-    protected $dates = ['deleted'];
+    protected $dates = ['deleted_at'];
+
 }

@@ -9,7 +9,9 @@ return [
             'general' => '选项列表',
         ],
        'log-viewer' => [
-         'main' => '日志管理'
+         'dashboard' => '日志中心',
+         'logs' => '日志列表',
+         'main' => '日志管理',
        ],
     ],
 ];

@@ -15,5 +15,5 @@ return [
 
     'failed' => '用户名密码错误!',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
+    'general_error' => '无权访问',
 ];

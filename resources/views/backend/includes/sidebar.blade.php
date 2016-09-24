@@ -34,11 +34,11 @@
                 <a href="{!! route('backend.dashboard') !!}"><span>{{trans('menus.backend.sidebar.dashboard')}}</span></a>
             </li>
 
-            @permission('view-access-permission')
+            {{--@permission('view-access-permission')--}}
             <li class="{{Active::getClassIf(if_uri_pattern('backend/access/*'))}}">
                 <a href="{!!url('backend/access/users')!!}"><span>{{ trans('menus.backend.access.title') }}</span></a>
             </li>
-            @endauth
+            {{--@endauth--}}
 
             <li class="{{Active::getClassIf(if_uri_pattern('admin/log-viewer*'))}} treeview">
                 <a href="#">

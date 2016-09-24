@@ -25,5 +25,6 @@ Route::group(['namespace'=>'Backend','prefix'=>'backend'], function(){
      */
     Route::group(['middleware'=>'backend'] ,function(){
         require __DIR__.'/Routes/Backend/Dashboard.php';
+        require __DIR__.'/Routes/Backend/Access.php';
     });
 });

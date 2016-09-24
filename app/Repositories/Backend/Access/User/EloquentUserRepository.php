@@ -70,4 +70,79 @@ class EloquentUserRepository implements UserRepositoryContract
         $user->confirmed = 1;
         return $user->save();
     }
+
+    /**
+     * @param $perPage
+     * @param int $status
+     * @param string $orderBy
+     * @param string $sort
+     * @return mixed
+     */
+    public function getUserPaginated($perPage, $status = 1, $orderBy = 'id', $sort = 'asc')
+    {
+        return User::where('status',1)
+            ->orderBy($orderBy,$sort)
+            ->paginate($perPage);
+    }
+
+    /**
+     * @param $id
+     * @param $status
+     * @return bool
+     * @throws GeneralException
+     */
+    public function mark($id, $status)
+    {
+        if(access()->id() == $id && $status ==0){
+            throw new GeneralException(trans('exceptions.backend.access.users.cant_deactivate_self'));
+        }
+        $user         = $this->findOrThrowException($id);
+        $user->status = $status;
+
+        if ($user->save()) {
+            return true;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.access.users.mark_error'));
+    }
+
+    /**
+     * @param $id
+     * @param bool $withRoles
+     * @return mixed
+     * @throws GeneralException
+     */
+    public function findOrThrowException($id, $withRoles = false)
+    {
+        if($withRoles){
+            $user = User::with('roles')->withTrashed()->find($id);
+        }else{
+            $user = User::withTrashed()->find($id);
+        }
+        if(! is_null($user)){
+            return $user;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.access.users.not_found'));
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws GeneralException
+     */
+    public function destroy($id)
+    {
+        if(access()->id() == $id){
+            throw new GeneralException(trans('exceptions.backend.access.users.cant_delete_self'));
+        }
+
+        $user = $this->findOrThrowException($id);
+        if($user->delete()){
+            return true;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.access.users.delete_error'));
+    }
+
 }

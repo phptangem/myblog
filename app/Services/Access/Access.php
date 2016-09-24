@@ -22,4 +22,27 @@ class Access
     {
         return auth()->user();
     }
+
+
+    /**
+     * 当前用户是否拥有制定权限
+     * @param $permission 权限名 或 权限ID
+     * @return bool
+     */
+    public function allow($permission)
+    {
+        if($user = $this->user()){
+            return $user->allow($permission);
+        }
+
+        return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function id()
+    {
+        return auth()->id();
+    }
 }
