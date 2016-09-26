@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Services\Access\Access;
 use Illuminate\Support\ServiceProvider;
-
+use Blade;
 class AccessServiceProvider extends ServiceProvider
 {
     /**
@@ -14,7 +14,7 @@ class AccessServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->registerBladeExtensions();
     }
 
     /**
@@ -59,5 +59,29 @@ class AccessServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Access\User\UserRepositoryContract::class,
             \App\Repositories\Backend\Access\User\EloquentUserRepository::class
             );
+        $this->app->bind(
+            \App\Repositories\Backend\Access\Role\RoleRepositoryContract::class,
+            \App\Repositories\Backend\Access\Role\EloquentRoleRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\Backend\Access\Permission\PermissionRepositoryContract::class,
+            \App\Repositories\Backend\Access\Permission\EloquentPermissionRepository::class
+        );
+    }
+
+    /**
+     * new blade extension
+     */
+    private function registerBladeExtensions()
+    {
+        Blade::directive('permission', function($permission){
+            return "<?php if(access()->allow{$permission}): ?>";
+        });
+        Blade::directive('permissions', function($permission){
+            return "<?php if(access()->allowMultiple{$permission}): ?>";
+        });
+        Blade::directive('endauth', function(){
+            return "<?php endif; ?>";
+        });
     }
 }

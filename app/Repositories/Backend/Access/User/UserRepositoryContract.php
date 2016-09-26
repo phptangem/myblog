@@ -47,4 +47,11 @@ interface UserRepositoryContract
      * @return mixed
      */
     public function mark($id, $status);
+
+    /**
+     * @param $perPage
+     * @return mixed
+     */
+    public function getDeletedUsersPaginated($perPage);
+
 }

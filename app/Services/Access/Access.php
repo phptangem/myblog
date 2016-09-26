@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Access;
 
+use App\Exceptions\GeneralException;
+
 class Access
 {
     public $app;
@@ -44,5 +46,22 @@ class Access
     public function id()
     {
         return auth()->id();
+    }
+
+    /**
+     * @param $permissions
+     * @param bool $needsAll
+     * @return bool
+     */
+    public function allowMultiple($permissions, $needsAll = false)
+    {
+        if($user = $this->user()){
+            if(! is_array($permissions)){
+                $permissions = (array)$permissions;
+            }
+            return $user->allowMultiple($permissions, $needsAll);
+        }
+
+        return false;
     }
 }

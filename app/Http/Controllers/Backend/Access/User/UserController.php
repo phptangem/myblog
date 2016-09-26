@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Access\User;
 use App\Http\Requests\Backend\Access\User\ChangePasswordRequest;
 use App\Http\Requests\Backend\Access\User\DeleteUserRequest;
 use App\Http\Requests\Backend\Access\User\MarkRequest;
+use App\Repositories\Backend\Access\Permission\EloquentPermissionRepository;
+use App\Repositories\Backend\Access\Role\EloquentRoleRepository;
 use App\Repositories\Backend\Access\User\EloquentUserRepository;
 use Illuminate\Http\Request;
 
@@ -13,11 +15,18 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    protected $user;
-
-    public function __construct(EloquentUserRepository $user)
+    protected $users;
+    protected $roles;
+    protected $permissions;
+    public function __construct(
+        EloquentUserRepository $users,
+        EloquentRoleRepository $roles,
+        EloquentPermissionRepository $permissions
+    )
     {
-        $this->user = $user;
+        $this->users = $users;
+        $this->roles = $roles;
+        $this->permissions = $permissions;
     }
 
     public function index()
@@ -33,7 +42,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.access.user.create')
+            ->withRoles($this->roles->getAllRoles('sort', 'asc',true))
+            ->withPermissions($this->permissions->getAllPermissions());
     }
 
     /**
@@ -117,5 +128,23 @@ class UserController extends Controller
     {
         return view('backend.access.user.change-password')
             ->withUser($this->user->findOrThrowException($id));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function deactivated()
+    {
+        return view('backend.access.deactivated')
+            ->withUsers($this->user->getUserPaginated(25,0));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function deleted()
+    {
+        return view('backend.access.deleted')
+            ->withUsers($this->user->getDeletedUsersPaginated(25));
     }
 }

@@ -14,6 +14,8 @@ return [
         'crud' => [
             'edit' => '编辑',
             'delete' => '删除',
+            'create' => '创建',
         ],
+        'cancel' => '返回'
     ],
 ];

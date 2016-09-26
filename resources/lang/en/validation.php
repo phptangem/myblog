@@ -113,6 +113,19 @@ return [
             'email' => '邮箱',
             'password' => '密码',
             'password_confirmation' => '确认密码',
+            'access' =>[
+                'users' => [
+                    'name' => '用户名',
+                    'email' => '邮箱',
+                    'password' => '密码',
+                    'password_confirmation' => '确认密码',
+                    'active' => '禁用',
+                    'confirmed' => '是否已经激活',
+                    'send_confirmation_email' => '发送激活邮件',
+                    'associated_roles' => '绑定角色',
+                    'other_permissions' =>'其他权限',
+                ],
+            ],
         ],
     ],
 

@@ -41,5 +41,21 @@ trait UserAccess
         return false;
     }
 
-
+    /**
+     * @param $permissions
+     * @param bool $needsAll
+     * @return bool
+     */
+    public function allowMultiple($permissions, $needsAll = false)
+    {
+        foreach($permissions as $permission){
+            if($needsAll && !$this->allow($permission)){
+                return false;
+            }
+            if(! $needsAll && $this->allow($permission)){
+                return true;
+            }
+        }
+        return true;
+    }
 }

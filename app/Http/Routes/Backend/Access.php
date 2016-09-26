@@ -9,7 +9,8 @@ Route::group([
      */
     Route::group(['namespace' => 'User'], function(){
         Route::resource('users','UserController', ['except'=>['show']]);
-
+        Route::get('users/deactivated', 'UserController@deactivated')->name('backend.access.users.deactivated');
+        Route::get('users/deleted', 'UserController@deleted')->name('backend.access.users.deleted');
         /**
          * Specific user
          */
@@ -18,5 +19,19 @@ Route::group([
             Route::get('password/change', "UserController@changePassword")->name('backend.access.user.change-password');
         });
 
+    });
+    /**
+     * Role management
+     */
+    Route::group(['namespace' => 'Role'], function(){
+        Route::resource('roles','RoleController', ['except' => 'show']);
+    });
+
+    /**
+     * Permission management
+     */
+    Route::group(['namespace' => 'Permission'], function(){
+        Route::resource('permissions','PermissionController');
+        Route::resource('permission-group','PermissionGroupController');
     });
 });

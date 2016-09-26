@@ -6,6 +6,11 @@ return [
             'users' => [
                 'management' => '用户管理',
                 'active' => '正常用户',
+                'create' => '新建用户',
+                'permissions' => '权限',
+                'all_permissions' => '全部权限',
+                'no_permissions' => '无任何权限',
+                'permission_check' => '选择权限',
                 'table' => [
                     'id' => '编号',
                     'name' => '用户名',
@@ -34,5 +39,7 @@ return [
     'general' => [
         'actions' => '操作',
         'none' => '无',
+        'show' => '显示',
+        'hide' => '隐藏',
     ],
 ];

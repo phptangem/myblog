@@ -80,7 +80,7 @@ class EloquentUserRepository implements UserRepositoryContract
      */
     public function getUserPaginated($perPage, $status = 1, $orderBy = 'id', $sort = 'asc')
     {
-        return User::where('status',1)
+        return User::where('status',$status)
             ->orderBy($orderBy,$sort)
             ->paginate($perPage);
     }
@@ -143,6 +143,16 @@ class EloquentUserRepository implements UserRepositoryContract
         }
 
         throw new GeneralException(trans('exceptions.backend.access.users.delete_error'));
+    }
+
+    /**
+     * @param $perPage
+     * @return mixed
+     */
+    public function getDeletedUsersPaginated($perPage)
+    {
+        return User::onlyTrashed()
+            ->paginate($perPage);
     }
 
 }
