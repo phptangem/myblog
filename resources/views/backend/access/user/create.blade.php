@@ -66,7 +66,7 @@
 
             <div class="form-group">
                 <label class="col-lg-2 control-label">{{ trans('validation.attributes.backend.access.users.send_confirmation_email') }}<br/>
-{{--                    <small>{{ trans('strings.backend.access.users.if_confirmed_off') }}</small>--}}
+                    {{--<small>{{ trans('strings.backend.access.users.if_confirmed_off') }}</small>--}}
                 </label>
                 <div class="col-lg-1">
                     <input type="checkbox" value="1" name="confirmation_email" />

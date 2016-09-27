@@ -155,4 +155,8 @@ class EloquentUserRepository implements UserRepositoryContract
             ->paginate($perPage);
     }
 
+    public function create($input, $roles, $permissions)
+    {
+
+    }
 }

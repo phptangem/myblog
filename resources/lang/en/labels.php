@@ -11,6 +11,7 @@ return [
                 'all_permissions' => '全部权限',
                 'no_permissions' => '无任何权限',
                 'permission_check' => '选择权限',
+                'dependencies' => '依赖权限',
                 'table' => [
                     'id' => '编号',
                     'name' => '用户名',

@@ -54,4 +54,11 @@ interface UserRepositoryContract
      */
     public function getDeletedUsersPaginated($perPage);
 
+    /**
+     * @param $input
+     * @param $roles
+     * @param $permissions
+     * @return mixed
+     */
+    public function create($input, $roles, $permissions);
 }

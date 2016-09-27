@@ -32,7 +32,7 @@ class UserController extends Controller
     public function index()
     {
         return view('backend.access.user.index')
-            ->withUsers($this->user->getUserPaginated(config('access.users.default_per_page'), 1));
+            ->withUsers($this->users->getUserPaginated(config('access.users.default_per_page'), 1));
     }
 
     /**
@@ -55,7 +55,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -100,7 +99,7 @@ class UserController extends Controller
      */
     public function destroy($id, DeleteUserRequest $request)
     {
-        $this->user->destory($id);
+        $this->users->destory($id);
         return redirect()->back()->withFlashSuccess(trans('alerts.backend.users.deleted'));
     }
 
@@ -113,7 +112,7 @@ class UserController extends Controller
      */
     public function mark($id,$status, MarkRequest $request)
     {
-        $this->user->mark($id, $status);
+        $this->users->mark($id, $status);
 
         return redirect()->back()->withFlashSuccess("alerts.backend.users.updated");
     }
@@ -127,7 +126,7 @@ class UserController extends Controller
     public function changePassword($id, ChangePasswordRequest $request)
     {
         return view('backend.access.user.change-password')
-            ->withUser($this->user->findOrThrowException($id));
+            ->withUser($this->users->findOrThrowException($id));
     }
 
     /**
@@ -136,7 +135,7 @@ class UserController extends Controller
     public function deactivated()
     {
         return view('backend.access.deactivated')
-            ->withUsers($this->user->getUserPaginated(25,0));
+            ->withUsers($this->users->getUserPaginated(25,0));
     }
 
     /**
@@ -145,6 +144,6 @@ class UserController extends Controller
     public function deleted()
     {
         return view('backend.access.deleted')
-            ->withUsers($this->user->getDeletedUsersPaginated(25));
+            ->withUsers($this->users->getDeletedUsersPaginated(25));
     }
 }
