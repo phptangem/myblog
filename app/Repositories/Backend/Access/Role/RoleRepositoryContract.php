@@ -10,4 +10,12 @@ interface RoleRepositoryContract
      * @return mixed
      */
     public function getAllRoles($orderBy = 'sort', $sort = 'asc', $withRoles = true);
+
+    /**
+     * @param $perPage
+     * @param string $orderBy
+     * @param string $sort
+     * @return mixed
+     */
+    public function getRolesPaginated($perPage, $orderBy = 'id', $sort = 'asc');
 }

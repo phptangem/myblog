@@ -28,6 +28,17 @@ return [
                     'total' => '用户总计:',
                 ],
             ],
+            'roles' => [
+                'management' => '角色管理',
+                'table' => [
+                    'role' => '角色名',
+                    'permissions' => '拥有权限',
+                    'number_of_users' => '关联用户数',
+                    'sort' => '排序',
+                    'actions' => '操作',
+                    'total' => '总计',
+                ],
+            ],
         ],
         'auth' => [
             'login_box_title' => '登录',
@@ -46,5 +57,6 @@ return [
         'none' => '无',
         'show' => '显示',
         'hide' => '隐藏',
+        'all' => '全部',
     ],
 ];

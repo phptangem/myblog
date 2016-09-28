@@ -5,6 +5,12 @@ use App\Models\Access\Role\Role;
 class EloquentRoleRepository implements RoleRepositoryContract
 {
 
+    /**
+     * @param string $orderBy
+     * @param string $sort
+     * @param bool|false $withPermissions
+     * @return mixed
+     */
     public function getAllRoles($orderBy = 'sort', $sort = 'asc',$withPermissions = false)
     {
         if($withPermissions){
@@ -15,5 +21,18 @@ class EloquentRoleRepository implements RoleRepositoryContract
 
         return Role::orderBy($orderBy, $sort)
             ->get();
+    }
+
+    /**
+     * @param $perPage
+     * @param string $orderBy
+     * @param string $sort
+     * @return mixed
+     */
+    public function getRolesPaginated($perPage, $orderBy = 'id', $sort='asc')
+    {
+        return Role::with('permissions')
+            ->orderBy($orderBy, $sort)
+            ->paginate($perPage);
     }
 }
