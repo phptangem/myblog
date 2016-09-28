@@ -58,4 +58,109 @@ trait UserAccess
         }
         return true;
     }
+
+    /**
+     * @param $role
+     */
+    public function attachRole($role)
+    {
+        if(is_object($role)){
+            $role = $role->getKey();
+        }
+        if(is_array($role)){
+            $role = $role['id'];
+        }
+
+        $this->roles()->attach($role);
+    }
+
+    /**
+     * @param $roles
+     */
+    public function attachRoles($roles)
+    {
+        foreach($roles as $role){
+            $this->attachRole($role);
+        }
+    }
+
+    /**
+     * @param $permission
+     */
+    public function attachPermission($permission)
+    {
+        if(is_object($permission)){
+            $permission = $permission->getKey();
+        }
+        if(is_array($permission)){
+            $permission = $permission['id'];
+        }
+        $this->permissions()->attach($permission);
+    }
+
+    /**
+     * @param $permissions
+     */
+    public function attachPermissions($permissions)
+    {
+        if(count($permissions)){
+            foreach($permissions as $permission){
+                $this->attachPermission($permission);
+            }
+        }
+    }
+
+    /**
+     * @param $permission
+     */
+    public function detachPermission($permission)
+    {
+        if(is_object($permission)){
+            $permission = $permission->getKey();
+        }
+        if(is_array($permission)){
+            $permission = $permission['id'];
+        }
+
+        $this->permissions()->detach($permission);
+    }
+
+    /**
+     * @param $permissions
+     */
+    public function detachPermissions($permissions)
+    {
+        if(count($permissions)){
+            foreach($permissions as $permission){
+                $this->detachPermission($permission);
+            }
+        }
+    }
+
+    /**
+     * @param $role
+     */
+    public function detachRole($role)
+    {
+        if(is_object($role)){
+            $role = $role->getKey();
+        }
+        if(is_array($role)){
+            $role = $role['id'];
+        }
+
+        $this->roles()->detach($role);
+    }
+
+    /**
+     * @param $roles
+     */
+    public function detachRoles($roles)
+    {
+        if(count($roles)){
+            foreach($roles as $role){
+                $this->detachRole($role);
+            }
+        }
+    }
 }

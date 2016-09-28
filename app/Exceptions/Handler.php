@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Backend\Access\User\UserNeedsRoleException;
 use Exception;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
@@ -58,6 +59,12 @@ class Handler extends ExceptionHandler
          */
         if($e instanceof GeneralException){
             return redirect()->back()->withInput()->withFlashDanger($e->getMessage());
+        }
+        /**
+         * User needs roles and none were selected
+         */
+        if($e instanceof UserNeedsRoleException){
+            return redirect()->route('backend.access.users.edit',$e->getUserID())->withInput()->withFlashDanger($e->getValidationErrors());
         }
         return parent::render($request, $e);
     }

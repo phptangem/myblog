@@ -14,7 +14,7 @@ class User extends Authenticatable
     use SoftDeletes, UserAttribute,UserRelationship,UserAccess;
 
     protected $guarded = ['id'];
+
     protected $hidden  = ['password', 'remember_token'];
     protected $dates = ['deleted_at'];
-
 }

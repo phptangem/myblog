@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Backend\Access\User;
 
 use App\Http\Requests\Backend\Access\User\ChangePasswordRequest;
 use App\Http\Requests\Backend\Access\User\DeleteUserRequest;
+use App\Http\Requests\Backend\Access\User\EditUserRequest;
 use App\Http\Requests\Backend\Access\User\MarkRequest;
+use App\Http\Requests\Backend\Access\User\StoreUserRequest;
+use App\Http\Requests\Backend\Access\User\UpdatePasswordRequest;
+use App\Http\Requests\Backend\Access\User\UpdateUserRequest;
 use App\Repositories\Backend\Access\Permission\EloquentPermissionRepository;
 use App\Repositories\Backend\Access\Role\EloquentRoleRepository;
 use App\Repositories\Backend\Access\User\EloquentUserRepository;
@@ -53,8 +57,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
+        $this->users->create(
+            $request->except('assignees_roles','permission_user'),
+            $request->only('assignees_roles'),
+            $request->only('permission_user')
+            );
+
+        return redirect()->route('backend.access.users.index')->withFlashSuccess(trans('alerts.backend.users.created'));
     }
 
     /**
@@ -69,26 +80,36 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @param EditUserRequest $request
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
      */
-    public function edit($id)
+    public function edit($id, EditUserRequest $request)
     {
-        //
+        $user = $this->users->findOrThrowException($id, false);
+        return view('backend.access.user.edit')
+            ->withUser($user)
+            ->withUserRoles($user->roles->lists('id')->all())
+            ->withRoles($this->roles->getAllRoles('sort', 'asc',true))
+            ->withUserPermissions($user->permissions->lists('id')->all())
+            ->withPermissions($this->permissions->getAllPermissions());
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateUserRequest $request
+     * @param $id
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+        $this->users->update(
+            $id,
+            $request->except('assignees_roles','permission_user'),
+            $request->only('assignees_roles'),
+            $request->only('permission_user')
+        );
+
+        return redirect()->route('backend.access.users.index')->withFlashSuccess(trans('alerts.backend.users.updated'));
     }
 
 
@@ -123,19 +144,24 @@ class UserController extends Controller
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function changePassword($id, ChangePasswordRequest $request)
+    public function showUpdatePasswordForm($id, ChangePasswordRequest $request)
     {
         return view('backend.access.user.change-password')
             ->withUser($this->users->findOrThrowException($id));
     }
 
+    public function updatePassword($id, UpdatePasswordRequest $request)
+    {
+        $this->users->updatePassword($id,$request->only('password'));
+        return redirect()->route('backend.access.users.index')->withFlashSuccess(trans('alerts.backend.users.updated_password'));
+    }
     /**
      * @return mixed
      */
     public function deactivated()
     {
-        return view('backend.access.deactivated')
-            ->withUsers($this->users->getUserPaginated(25,0));
+        return view('backend.access.user.deactivated')
+            ->withUsers($this->users->getUserPaginated(10,0));
     }
 
     /**
@@ -143,7 +169,18 @@ class UserController extends Controller
      */
     public function deleted()
     {
-        return view('backend.access.deleted')
+        return view('backend.access.user.deleted')
+
             ->withUsers($this->users->getDeletedUsersPaginated(25));
+    }
+
+    public function restore($id)
+    {
+        
+    }
+
+    public function delete($id)
+    {
+
     }
 }

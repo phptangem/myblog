@@ -2,7 +2,7 @@
 return [
     'users' => [
         'confirm_email' => false,
-        'default_per_page' => 1,
+        'default_per_page' => 10,
     ],
 
     /*

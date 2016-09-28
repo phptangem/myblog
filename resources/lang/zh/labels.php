@@ -12,6 +12,10 @@ return [
                 'no_permissions' => '无任何权限',
                 'permission_check' => '选择权限',
                 'dependencies' => '依赖权限',
+                'deactivated'=>'禁用用户',
+                'deleted' => '删除用户',
+                'change_password' => '修改密码',
+                'change_password_for' => '修改用户::user的密码',
                 'table' => [
                     'id' => '编号',
                     'name' => '用户名',

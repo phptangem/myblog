@@ -35,7 +35,7 @@ trait UserAttribute
      */
     public function getEditButtonAttribute()
     {
-        if($this->allow('edit-users')){
+        if(access()->allow('edit-users')){
             return '<a href="'.route('backend.access.users.edit',$this->id).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.general.crud.edit') . '"></i></a>';
         }
 
@@ -47,8 +47,8 @@ trait UserAttribute
      */
     public function getChangePasswordButtonAttribute()
     {
-        if($this->allow('change-users-password')){
-            return '<a href="' . route('backend.access.user.change-password', $this->id) . '" class="btn btn-xs btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.change_password') . '"></i></a>';
+        if(access()->allow('change-users-password')){
+            return '<a href="' . route('backend.access.users.change-password', $this->id) . '" class="btn btn-xs btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.change_password') . '"></i></a>';
         }
 
         return '';
@@ -62,13 +62,13 @@ trait UserAttribute
         switch($this->status){
             case 0:
                 if (access()->allow('reactivate-users')) {
-                    return '<a href="' . route('backend.access.user.mark', [$this->id, 1]) . '" class="btn btn-xs btn-success"><i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.activate') . '"></i></a> ';
+                    return '<a href="' . route('backend.access.users.mark', [$this->id, 1]) . '" class="btn btn-xs btn-success"><i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.activate') . '"></i></a> ';
                 }
 
                 break;
             case 1:
                 if (access()->allow('deactivate-users')) {
-                    return '<a href="' . route('backend.access.user.mark', [$this->id, 0]) . '" class="btn btn-xs btn-warning"><i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.deactivate') . '"></i></a> ';
+                    return '<a href="' . route('backend.access.users.mark', [$this->id, 0]) . '" class="btn btn-xs btn-warning"><i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.deactivate') . '"></i></a> ';
                 }
 
                 break;
@@ -114,12 +114,37 @@ trait UserAttribute
     /**
      * @return string
      */
+    public function getRestoreUserButtonAttribute()
+    {
+        if(access()->allow('undelete-users')){
+            return '<a href="'.route('backend.access.users.restore', $this->id).'" class="btn btn-xs btn-success" name="restore_user"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="'. trans('buttons.backend.access.users.restore_user') .'"></i></a>';
+        }
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPermanentlyDeleteUserButtonAttribute()
+    {
+        if(access()->allow('permanently-delete-users')){
+            return '<a href="'.route('backend.access.users.delete-permanently', $this->id).'" class="btn btn-xs btn-danger" name="delete_user_perm"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.delete_permanently') .'"></i></a>';
+        }
+        return '';
+    }
+    /**
+     * @return string
+     */
     public function getActionButtonsAttribute()
     {
-        return $this->getEditButtonAttribute().' '.
-        $this->getChangePasswordButtonAttribute().' '.
-        $this->getStatusButtonAttribute().' '.
-        $this->getConfirmedButtonAttribute().' '.
-        $this->getDeleteButtonAttribute();
+        if(!$this->deleted_at) {
+            return $this->getEditButtonAttribute() . ' ' .
+            $this->getChangePasswordButtonAttribute() . ' ' .
+            $this->getStatusButtonAttribute() . ' ' .
+            $this->getConfirmedButtonAttribute() . ' ' .
+            $this->getDeleteButtonAttribute();
+        }
+        return $this->getRestoreUserButtonAttribute().' '.
+        $this->getPermanentlyDeleteUserButtonAttribute();
     }
 }

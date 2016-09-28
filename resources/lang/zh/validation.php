@@ -119,7 +119,7 @@ return [
                     'email' => '邮箱',
                     'password' => '密码',
                     'password_confirmation' => '确认密码',
-                    'active' => '禁用',
+                    'active' => '是否启用',
                     'confirmed' => '是否已经激活',
                     'send_confirmation_email' => '发送激活邮件',
                     'associated_roles' => '绑定角色',
