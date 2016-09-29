@@ -47,12 +47,9 @@ class EloquentRoleRepository implements RoleRepositoryContract
             throw new GeneralException(trans('exceptions.backend.access.roles.already_exists'));
         }
 
-        //See if the role has all access
         $all = $input['associated-permissions'] == 'all' ? true : false;
 
-        //This config is only required if all is false
         if (!$all)
-            //See if the role must contain a permission as per config
         {
             if (config('access.roles.role_must_contain_permission') && count($input['permissions']) == 0) {
                 throw new GeneralException(trans('exceptions.backend.access.roles.needs_permission'));
@@ -63,7 +60,6 @@ class EloquentRoleRepository implements RoleRepositoryContract
         $role->name = $input['name'];
         $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
 
-        //See if this role has all permissions and set the flag on the role
         $role->all = $all;
 
         if ($role->save()) {
@@ -86,5 +82,103 @@ class EloquentRoleRepository implements RoleRepositoryContract
         }
 
         throw new GeneralException(trans('exceptions.backend.access.roles.create_error'));
+    }
+
+    /**
+     * @param $id
+     * @param bool|false $withPermissions
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null|static|static[]
+     * @throws GeneralException
+     */
+    public function findOrThrowException($id, $withPermissions = false)
+    {
+        if(! is_null(Role::find($id))){
+            if($withPermissions){
+                return Role::with('permissions')->find($id);
+            }
+            return Role::find($id);
+        }
+        throw new GeneralException(trans('exceptions.backend.access.roles.not_found'));
+    }
+
+    /**
+     * @param $id
+     * @param $input
+     * @return bool
+     * @throws GeneralException
+     */
+    public function update($id, $input)
+    {
+        $role = $this->findOrThrowException($id);
+
+        if ($role->id == 1) {
+            $all = true;
+        } else {
+            $all = $input['associated-permissions'] == 'all' ? true : false;
+        }
+
+
+        if (! $all) {
+            if (config('access.roles.role_must_contain_permission') && count($input['permissions']) == 0) {
+                throw new GeneralException(trans('exceptions.backend.access.roles.needs_permission'));
+            }
+        }
+
+        $role->name = $input['name'];
+        $role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int) $input['sort'] : 0;
+
+        $role->all = $all;
+
+        if ($role->save()) {
+            if ($all) {
+                $role->permissions()->sync([]);
+            } else {
+                $role->permissions()->sync([]);
+
+                $current     = explode(',', $input['permissions']);
+                $permissions = [];
+
+                if (count($current)) {
+                    foreach ($current as $perm) {
+                        if (is_numeric($perm)) {
+                            array_push($permissions, $perm);
+                        }
+
+                    }
+                }
+                $role->attachPermissions($permissions);
+            }
+
+            return true;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.access.roles.update_error'));
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws GeneralException
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        if ($id == 1) {
+            throw new GeneralException(trans('exceptions.backend.access.roles.cant_delete_admin'));
+        }
+
+        $role = $this->findOrThrowException($id, true);
+
+        if ($role->users()->count() > 0) {
+            throw new GeneralException(trans('exceptions.backend.access.roles.has_users'));
+        }
+
+        $role->permissions()->sync([]);
+
+        if ($role->delete()) {
+            return true;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.access.roles.delete_error'));
     }
 }

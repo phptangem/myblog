@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend\Access\Role;
 
 use App\Http\Requests\Backend\Access\Role\CreateRoleRequest;
+use App\Http\Requests\Backend\Access\Role\DeleteRoleRequest;
+use App\Http\Requests\Backend\Access\Role\EditRoleRequest;
 use App\Http\Requests\Backend\Access\Role\StoreRoleRequest;
+use App\Http\Requests\Backend\Access\Role\UpdateRoleRequest;
 use App\Repositories\Backend\Access\Permission\Group\PermissionGroupRepositoryContract;
 use App\Repositories\Backend\Access\Permission\PermissionRepositoryContract;
 use App\Repositories\Backend\Access\Role\RoleRepositoryContract;
@@ -49,10 +52,8 @@ class RoleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreRoleRequest $request
+     * @return mixed
      */
     public function store(StoreRoleRequest $request)
     {
@@ -73,36 +74,36 @@ class RoleController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @param EditRoleRequest $request
      */
-    public function edit($id)
+    public function edit($id, EditRoleRequest $request)
     {
-        //
+        $role = $this->roles->findOrThrowException($id);
+        return view('backend.access.role.edit')
+            ->withRole($role)
+            ->withGroups($this->group->getAllGroups(false))
+            ->withPermissions($this->permissions->getUngroupedPermissions())
+            ->withRolePermissions($role->permissions->lists('id')->all());
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateRoleRequest $request
+     * @param $id
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRoleRequest $request, $id)
     {
-        //
+        $this->roles->update($id, $request->all());
+        return redirect()->route('backend.access.roles.index')->withFlashSuccess(trans('alerts.backend.roles.updated'));
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @param DeleteRoleRequest $request
      */
-    public function destroy($id)
+    public function destroy($id, DeleteRoleRequest $request)
     {
-        //
+        $this->roles->destroy($id);
+        return redirect()->route('backend.access.roles.index')->withFlashSuccess(trans('alerts.backend.roles.deleted'));
     }
 }
