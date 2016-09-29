@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend\Access\User;
 
 use App\Http\Requests\Request;
 
-class MarkRequest extends Request
+class RestoreUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,16 +13,7 @@ class MarkRequest extends Request
      */
     public function authorize()
     {
-        switch((int)request()->segment(6)){
-            case 0:
-                return access()->allow('deactivate-users');
-                break;
-            case 1:
-                return access()->allow('reactivate-users');
-                break;
-        }
-
-        return false;
+        return access()->allow('restore-users');
     }
 
     /**

@@ -12,6 +12,7 @@ return [
                 'update_error' => '更新失败,请重试',
                 'role_needed_create' => '请选择用户绑定角色',
                 'update_password_error' => '修改密码失败，请重试!',
+                'restore_error' => '恢复失败,请重试!',
             ],
         ],
         'auth' => [

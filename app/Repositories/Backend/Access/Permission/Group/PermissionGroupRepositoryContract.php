@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\Backend\Access\Permission\Group;
 
-interface PermissionGroupRepository
+interface PermissionGroupRepositoryContract
 {
     /**
      * @param $withChildren

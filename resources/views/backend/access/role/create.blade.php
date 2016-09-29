@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-    {!! Form::open(['route' => 'admin.access.roles.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-role']) !!}
+    {!! Form::open(['route' => 'backend.access.roles.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-role']) !!}
 
     <div class="box box-success">
         <div class="box-header with-border">
@@ -44,7 +44,7 @@
                             <div class="col-lg-12">
                                 <div class="alert alert-info">
                                     <i class="fa fa-info-circle"></i>
-                                    {!! getLanguageBlock('backend.lang.access.roles.associated-permissions-explanation') !!}
+                                    {{--{!! getLanguageBlock('backend.lang.access.roles.associated-permissions-explanation') !!}--}}
                                 </div><!--alert-->
                             </div><!--col-lg-12-->
 
@@ -160,7 +160,7 @@
     <div class="box box-success">
         <div class="box-body">
             <div class="pull-left">
-                <a href="{!! route('admin.access.roles.index') !!}" class="btn btn-danger btn-xs">{{ trans('buttons.general.cancel') }}</a>
+                <a href="{!! route('backend.access.roles.index') !!}" class="btn btn-danger btn-xs">{{ trans('buttons.general.cancel') }}</a>
             </div>
 
             <div class="pull-right">

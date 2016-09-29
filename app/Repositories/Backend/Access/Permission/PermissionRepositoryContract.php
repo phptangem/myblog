@@ -10,4 +10,9 @@ interface PermissionRepositoryContract
      * @return mixed
      */
     public function getAllPermissions($orderBy = 'display_name', $sort = 'asc', $withRoles = true);
+
+    /**
+     * @return mixed
+     */
+    public function getUngroupedPermissions();
 }

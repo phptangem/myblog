@@ -226,6 +226,40 @@ class EloquentUserRepository implements UserRepositoryContract
 
         throw  new GeneralException(trans('exceptions.backend.access.users.update_password_error'));
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws GeneralException
+     */
+    public function delete($id)
+    {
+        $user = $this->findOrThrowException($id, true);
+        $user->detachRoles($user->roles);
+        $user->detachPermissions($user->permissions);
+
+        try{
+            return $user->forceDelete();
+        }catch(\Exception $e){
+            throw new GeneralException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws GeneralException
+     */
+    public function restore($id)
+    {
+        $user = $this->findOrThrowException($id);
+
+        if ($user->restore()) {
+            return true;
+        }
+
+        throw new GeneralException(trans('exceptions.backend.access.users.restore_error'));
+    }
     /**
      * @param $user
      * @param $roles

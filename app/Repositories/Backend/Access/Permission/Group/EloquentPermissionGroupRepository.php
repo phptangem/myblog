@@ -1,13 +1,19 @@
 <?php
 namespace App\Repositories\Backend\Access\Permission\Group;
 
+use App\Exceptions\GeneralException;
 use App\Models\Access\Permission\PermissionGroup;
+use App\Models\Access\Role\Role;
 
-class EloquentPermissionGroup implements PermissionGroupRepository
+class EloquentPermissionGroupRepository implements PermissionGroupRepositoryContract
 {
-    public function getAllGroups($withChildren = false)
+    /**
+     * @param bool $withOutChildren
+     * @return mixed
+     */
+    public function getAllGroups($withOutChildren = false)
     {
-        if(! $withChildren){
+        if($withOutChildren){
             return PermissionGroup::orderBy('name', 'asc')->get();
         }
 
@@ -16,4 +22,6 @@ class EloquentPermissionGroup implements PermissionGroupRepository
             ->orderBy('sort','asc')
             ->get();
     }
+
+
 }

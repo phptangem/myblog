@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend\Access\User;
 use App\Http\Requests\Backend\Access\User\ChangePasswordRequest;
 use App\Http\Requests\Backend\Access\User\DeleteUserRequest;
 use App\Http\Requests\Backend\Access\User\EditUserRequest;
-use App\Http\Requests\Backend\Access\User\MarkRequest;
+use App\Http\Requests\Backend\Access\User\MarkUserRequest;
+use App\Http\Requests\Backend\Access\User\PermanentlyDeleteUserRequest;
+use App\Http\Requests\Backend\Access\User\RestoreUserRequest;
 use App\Http\Requests\Backend\Access\User\StoreUserRequest;
 use App\Http\Requests\Backend\Access\User\UpdatePasswordRequest;
 use App\Http\Requests\Backend\Access\User\UpdateUserRequest;
@@ -120,22 +122,22 @@ class UserController extends Controller
      */
     public function destroy($id, DeleteUserRequest $request)
     {
-        $this->users->destory($id);
+        $this->users->destroy($id);
         return redirect()->back()->withFlashSuccess(trans('alerts.backend.users.deleted'));
     }
 
     /**
      * @param $id
      * @param $status
-     * @param MarkRequest $request
+     * @param MarkUserRequest $request
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function mark($id,$status, MarkRequest $request)
+    public function mark($id,$status, MarkUserRequest $request)
     {
         $this->users->mark($id, $status);
 
-        return redirect()->back()->withFlashSuccess("alerts.backend.users.updated");
+        return redirect()->back()->withFlashSuccess($status == 0 ? trans("alerts.backend.users.deactivated"):trans("alerts.backend.users.activated"));
     }
 
     /**
@@ -174,13 +176,28 @@ class UserController extends Controller
             ->withUsers($this->users->getDeletedUsersPaginated(25));
     }
 
-    public function restore($id)
+    /**
+     * @param $id
+     * @param RestoreUserRequest $request
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     */
+    public function restore($id, RestoreUserRequest $request)
     {
-        
+        $this->users->restore($id);
+
+        return redirect()->back()->withFlashSuccess(trans('alerts.backend.users.restored'));
     }
 
-    public function delete($id)
+    /**
+     * @param $id
+     * @param PermanentlyDeleteUserRequest $request
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     */
+    public function delete($id , PermanentlyDeleteUserRequest $request)
     {
-
+        $this->users->delete($id);
+        return redirect()->back()->withFlashSuccess(trans('alerts.backend.users.deleted_permanently'));
     }
 }

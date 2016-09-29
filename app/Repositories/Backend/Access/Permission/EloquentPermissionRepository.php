@@ -21,4 +21,14 @@ class EloquentPermissionRepository implements PermissionRepositoryContract
             ->orderBy($orderBy, $sort)
             ->get();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUngroupedPermissions()
+    {
+        return Permission::whereNull('group_id')
+            ->orderBy('display_name','asc')
+            ->get();
+    }
 }

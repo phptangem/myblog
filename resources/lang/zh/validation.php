@@ -125,6 +125,12 @@ return [
                     'associated_roles' => '绑定角色',
                     'other_permissions' =>'其他权限',
                 ],
+                'roles' => [
+                    'name' => '角色名',
+                    'sort' => '排序',
+                    'associated_permissions' => '绑定权限',
+
+                ],
             ],
         ],
     ],

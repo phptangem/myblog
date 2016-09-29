@@ -2,8 +2,16 @@
 
 return [
     'backend' => [
+        'access' => [
+            'users' => [
+                'delete_user_confirm' => '本操作将永久删除此用户，无法恢复，请慎重考虑!',
+                'restore_user_confirm' => '恢复此用户到正常状态',
+            ],
+        ],
         'general' => [
             'all_rights_reserved' => 'All Rights Reserved',
+            'are_you_sure' =>'亲,请谨慎操作哟？',
+            'continue' => '确定',
             'status' => [
                 'online' => '在线',
             ],

@@ -4,10 +4,11 @@ return [
     'backend' => [
         'access' => [
             'users' => [
-                'change_password'   => '修改密码',
-                'deactivate'        => '禁用',
-                'activate'          => '取消禁用',
-                'restore_user'           => '恢复用户',
+                'change_password'           => '修改密码',
+                'deactivate'                => '禁用',
+                'activate'                  => '取消禁用',
+                'restore_user'              => '恢复用户',
+                'delete_permanently'        => '永久删除',
             ],
         ],
     ],
@@ -18,6 +19,6 @@ return [
             'create'    => '创建',
             'update'    => '更新',
         ],
-        'cancel' => '返回'
+        'cancel'        => '返回'
     ],
 ];

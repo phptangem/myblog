@@ -4,7 +4,9 @@ return [
         'confirm_email' => false,
         'default_per_page' => 10,
     ],
-
+    'roles' => [
+        'role_must_contain_permission' => true,
+    ],
     /*
     |--------------------------------------------------------------------------
     | Access

@@ -30,6 +30,7 @@ return [
             ],
             'roles' => [
                 'management' => '角色管理',
+                'create' => '创建角色',
                 'table' => [
                     'role' => '角色名',
                     'permissions' => '拥有权限',
@@ -38,6 +39,11 @@ return [
                     'actions' => '操作',
                     'total' => '总计',
                 ],
+            ],
+            'permissions' => [
+                'grouped_permissions' => '分组权限',
+                'ungrouped_permissions' => '未分组权限',
+                'no_ungrouped'    => '无未分组权限'
             ],
         ],
         'auth' => [
@@ -54,6 +60,7 @@ return [
     ],
     'general' => [
         'actions' => '操作',
+        'custom' => '自定义',
         'none' => '无',
         'show' => '显示',
         'hide' => '隐藏',

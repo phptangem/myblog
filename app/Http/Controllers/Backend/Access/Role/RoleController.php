@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Backend\Access\Role;
 
 use App\Http\Requests\Backend\Access\Role\CreateRoleRequest;
-use App\Repositories\Backend\Access\Permission\Group\PermissionGroupRepository;
+use App\Http\Requests\Backend\Access\Role\StoreRoleRequest;
+use App\Repositories\Backend\Access\Permission\Group\PermissionGroupRepositoryContract;
 use App\Repositories\Backend\Access\Permission\PermissionRepositoryContract;
 use App\Repositories\Backend\Access\Role\RoleRepositoryContract;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class RoleController extends Controller
     public function __construct(
         RoleRepositoryContract $roles,
         PermissionRepositoryContract $permissions,
-        PermissionGroupRepository $group
+        PermissionGroupRepositoryContract $group
     )
     {
         $this->roles = $roles;
@@ -43,7 +44,7 @@ class RoleController extends Controller
     public function create(CreateRoleRequest $request)
     {
         return view('backend.access.role.create')
-            ->withGroups($this->group->getAllGroups())
+            ->withGroups($this->group->getAllGroups(false))
             ->withPermissions($this->permissions->getUngroupedPermissions());
     }
 
@@ -53,9 +54,11 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        //
+        $this->roles->create($request->all());
+
+        return redirect()->route('backend.access.roles.index')->withFlashSuccess(trans('alerts.backend.roles.created'));
     }
 
     /**

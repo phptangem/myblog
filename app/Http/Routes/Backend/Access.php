@@ -15,7 +15,7 @@ Route::group([
          * Specific user
          */
         Route::group(['prefix' => 'user/{id}','where'=>['id'=>'[0-9]+']], function(){
-            Route::get('mask', "UserController@mask")->name('backend.access.users.mark')->where(['status' => '[0,1]']);
+            Route::get('mark/{status}', "UserController@mark")->name('backend.access.users.mark')->where(['status' => '[0,1]']);
             Route::get('password/change', "UserController@showUpdatePasswordForm")->name('backend.access.users.change-password');
             Route::post('password/change', "UserController@updatePassword")->name('backend.access.users.change-password');
             Route::get('restore', 'UserController@restore')->name('backend.access.users.restore');

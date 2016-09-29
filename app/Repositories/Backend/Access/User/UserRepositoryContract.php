@@ -70,4 +70,16 @@ interface UserRepositoryContract
      * @return mixed
      */
     public function update($id, $input, $roles, $permissions);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function restore($id);
 }
