@@ -35,6 +35,12 @@ Route::group([
      */
     Route::group(['namespace' => 'Permission'], function(){
         Route::resource('permissions','PermissionController');
-        Route::resource('permission-group','PermissionGroupController');
+        Route::group(['namespace' => 'Group'], function(){
+            Route::resource('groups','PermissionGroupController');
+
+        });
+        Route::group(['prefix'=>'groups','namespace'=>'Group'], function(){
+            Route::post('update-sort', 'PermissionGroupController@updateSort')->name('backend.access.groups.update-sort');
+        });
     });
 });

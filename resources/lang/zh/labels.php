@@ -43,7 +43,33 @@ return [
             'permissions' => [
                 'grouped_permissions' => '分组权限',
                 'ungrouped_permissions' => '未分组权限',
-                'no_ungrouped'    => '无未分组权限'
+                'no_ungrouped'    => '无未分组权限',
+                'management'    => '权限管理',
+                'label' => '权限',
+                'groups'    => [
+                    'create' => '创建权限组',
+                    'edit' => '编辑权限组',
+                    'table'=>[
+                        'name' => '权限组组名',
+
+                    ]
+                ],
+                'tabs'=>[
+                    'groups' => '权限组列表',
+                    'permissions' => '权限列表'
+                ],
+                'table' =>[
+                    'permission' => '权限码',
+                    'name' => '权限名',
+                    'dependencies' => '依赖权限',
+                    'users' => '关联用户',
+                    'roles' => '关联角色',
+                    'group' => '所属组',
+                    'group-sort' => '排序',
+                    'system' => '系统权限',
+                    'actions' => '操作',
+                    'total' => '总计',
+                ],
             ],
         ],
         'auth' => [
@@ -65,5 +91,6 @@ return [
         'show' => '显示',
         'hide' => '隐藏',
         'all' => '全部',
+        'yes' => '是',
     ],
 ];

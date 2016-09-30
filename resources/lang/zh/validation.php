@@ -131,6 +131,11 @@ return [
                     'associated_permissions' => '绑定权限',
 
                 ],
+                'permissions' => [
+                    'groups' => [
+                        'name' => '权限组名',
+                    ],
+                ],
             ],
         ],
     ],

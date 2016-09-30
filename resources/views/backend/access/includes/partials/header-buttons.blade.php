@@ -36,7 +36,7 @@
         <ul class="dropdown-menu pull-right" role="menu">
 
             @permission('create-permission-groups')
-            <li><a href="{{ route('backend.access.permission-group.create') }}">{{ trans('menus.backend.access.permissions.groups.create') }}</a></li>
+            <li><a href="{{ route('backend.access.groups.create') }}">{{ trans('menus.backend.access.permissions.groups.create') }}</a></li>
             @endauth
 
             @permission('create-permissions')

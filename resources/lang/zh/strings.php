@@ -7,6 +7,10 @@ return [
                 'delete_user_confirm' => '本操作将永久删除此用户，无法恢复，请慎重考虑!',
                 'restore_user_confirm' => '恢复此用户到正常状态',
             ],
+            'permissions' => [
+                'sort_explanation' => '拖动图标来调整权限组的上下级关系',
+                'edit_explanation' => '编辑权限组',
+            ],
         ],
         'general' => [
             'all_rights_reserved' => 'All Rights Reserved',

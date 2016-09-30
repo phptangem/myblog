@@ -19,4 +19,13 @@ trait PermissionRelationship
     {
         return $this->hasMany(config('access.dependency'),'permission_id','id');
     }
+
+    /**
+     * @return mixed
+     */
+    public function group()
+    {
+        return $this->belongsTo(config('access.group'), 'group_id');
+
+    }
 }
